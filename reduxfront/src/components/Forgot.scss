@@ -1,0 +1,18 @@
+@import '../css/constants/mixin.scss';
+
+.forgotCard{
+    @include card;
+    height: 350px;
+}
+
+.forgotTextField{
+    width: 320px;
+    height: 50px;
+}
+
+.forgotButton
+{
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}

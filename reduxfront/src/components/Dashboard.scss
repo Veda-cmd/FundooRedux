@@ -1,0 +1,219 @@
+@import '../css/constants/mixin.scss';
+
+.header{
+    font-size: 30px;
+    cursor: default;
+    color: rgb(100,108,108);
+}
+
+.menu{
+    width: 350px;
+    min-height: 150px;
+    margin-left: 5px;
+}
+
+.imagediv{
+    margin-top: 15px;
+    margin-left: 120px;
+}
+
+.text{
+    color: #202124;
+    font-family:Helvetica,Arial,sans-serif;
+    letter-spacing: .29px;
+    margin: 5px 0 0 10px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.changeButton{
+    background-color: #ffffff;
+    border: 1px solid #dadce0;
+    border-radius: 100px;
+    color: #3c4043; 
+    display: inline-block;
+    font-family: Helvetica,Arial,sans-serif;
+    letter-spacing: .25px;
+    margin: 16px 0 16px 120px;
+    max-width: 254px;
+    outline: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.signOut{
+    background-color: #ffffff;
+    border: 1px solid #dadce0;
+    border-radius: 100px;
+    color: #3c4043; 
+    display: inline-block;
+    font-family: Helvetica,Arial,sans-serif;
+    letter-spacing: .25px;
+    margin: 16px 0 16px 140px;
+    max-width: 254px;
+    outline: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.picture{
+    width: 120px;
+    height: 120px;
+    border-radius: 60%;
+    overflow: hidden;
+}
+
+.iconButton{
+background-color: transparent;
+}
+
+.buttonBackground{
+    border-radius: 0 25px 25px 0;
+    background-color: #feefc3;
+}
+
+.imgTitle{
+    @include flex;
+    width:140px;
+}
+
+.image{
+    width: 40px;
+    height: 40px;
+}
+
+.loader {
+    border: 2px solid #f3f3f3;
+    border-radius: 80%;
+    border-top: 2px solid #3498db;
+    width: 12px;
+    height: 12px;
+    animation: spin 2s linear infinite;
+}
+   
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+.refresh{
+    @include color-field;
+    margin-left: 45px;
+}
+
+.spanTitle{
+    font-weight: 500;
+    font-size: .875rem;
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.settings{
+    @include color-field;
+    margin-left: 30px;
+}
+
+.profile{
+    margin-left: 90px;
+}
+
+.refresh:hover,.settings:hover{
+    fill:black
+}
+
+.cardAnimate{
+    margin-left: 300px;
+    transition: 0.25s;
+    margin-top: 100px;
+}
+
+.shift{
+    margin-left: 450px;
+    transition: 0.25s;
+    margin-top: 100px;
+}
+
+.label{
+    color: #5f6368;
+    font-weight: 900;
+    font-size: 0.8rem;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1rem;
+    letter-spacing: 0.07rem;
+    text-transform: uppercase;
+    padding: 15px 24px 10px;
+}
+
+#searchButton{
+visibility: visible;
+margin:10px;
+padding: 0 5px;
+background: none;
+border: none;
+cursor: pointer;
+outline: none;
+line-height: 0;
+transition: opacity 250ms ease-out;
+}
+
+#searchButton:hover{
+    background-color: rgba(60,64,67,0.08);
+    border-radius: 40%;
+}
+
+.searchText{
+    color: #80868b;
+    cursor: default;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.75rem;
+}
+
+.searchDisplay{
+   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMDAwIj4KICA8cGF0aCBkPSJNMTcuNjMgNS44NEMxNy4yNyA1LjMzIDE2LjY3IDUgMTYgNUw1IDUuMDFDMy45IDUuMDEgMyA1LjkgMyA3djEwYzAgMS4xLjkgMS45OSAyIDEuOTlMMTYgMTljLjY3IDAgMS4yNy0uMzMgMS42My0uODRMMjIgMTJsLTQuMzctNi4xNnpNMTYgMTdINVY3aDExbDMuNTUgNUwxNiAxN3oiLz4KPC9zdmc+Cg==);
+   opacity: .2;
+   background-size: 120px 120px;
+    height: 120px;
+    margin-left: 35rem;
+    margin-top: 18rem;
+    width: 120px;
+}
+
+.searchDiv{
+    margin-top:150px;
+    margin-left: 100px;
+}
+
+.displayCards{
+    max-width: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+// @media screen and (max-width: 680px) {
+//     .dashboard {
+//       display: flex;
+//       width: 500px;
+//     }
+//     .refresh .settings .profile{
+//         margin-left: 0;
+//     }
+// }
+
+
+// @media screen and (min-width:1380px) {
+//     .refresh .settings .profile{
+//         margin-left: 0;
+//     }
+// }

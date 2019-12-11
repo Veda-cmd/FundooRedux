@@ -1,0 +1,46 @@
+@import '../css/constants/mixin.scss';
+@import '../css/constants/variables.scss';
+
+.loginCard{
+    @include card;
+    height: 490px;
+}
+
+.loginTitle{
+    @include main-title;
+}
+
+.loginHead{
+    font-size: 15px;
+    font: x-large;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.loginTextField{
+    width: 405px;
+    height: 50px;
+}
+
+.loginButton
+{
+    float: $left;
+    margin-top: 1.5em;
+    margin-left: 13em;
+}
+
+.forgot{
+    float: $left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-left: 5.5em;
+    margin-top: 2em;
+}
+
+.register{
+    float: $left;
+    margin-left: 13em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 1em;
+}
+
+
+

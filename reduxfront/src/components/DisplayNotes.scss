@@ -1,0 +1,88 @@
+.single{
+    width: 300px;
+    min-height: 100px;
+    margin-left: 5px;
+    margin-top: 10px;
+    transition-property: opacity,box-shadow,transform;
+    transition-timing-function: ease-in;
+    transition-duration: 1s;
+}
+
+.double{
+    width: 800px;
+    min-height: 50px;
+    margin-left: 5px;
+    margin-top: 10px;
+    transition: 0.3s;
+    transition-property: opacity,box-shadow,transform;
+    transition-timing-function: ease-in;
+    transition-duration: 1s;
+    .label1,.label2{
+        width:600px;
+        overflow:hidden;
+    }
+    .pin{
+        margin-left: 120px;
+    }
+}
+
+.label1{
+    width: 230px;
+    padding: 10px;
+    margin-top: 15px;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.label2{
+    width: 250px;
+    padding: 10px;
+    margin-top: 15px;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+    text-align: start;
+    overflow:hidden ;
+}
+
+.pin{
+    fill: grey;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.pin:hover{
+    fill:black;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+}
+
+#icons{
+    width: 100%;
+    margin-top: 40px;
+    margin-left: 45px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    // display: none;
+}
+
+.reminder{
+    text-align: initial;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+// @media screen and (max-width: 680px) {
+//     .single{
+//         display: flex;
+//         flex-direction: row;
+//         flex-wrap: wrap;
+//     }
+// }
+
+
+

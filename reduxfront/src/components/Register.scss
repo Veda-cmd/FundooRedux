@@ -1,0 +1,92 @@
+@import '../css/constants/color.scss';
+@import '../css/constants/mixin.scss';
+@import '../css/constants/variables.scss';
+
+.registerCard{
+    @include card;
+    height: 550px;
+}
+
+#firstname{
+    @include name-field;
+}
+
+#lastname{
+    @include name-field;
+}
+
+#email{
+    width:475px;
+    height: 15px;
+}
+
+#password{
+    @include password-field;
+}
+
+#confirmpassword{
+   @include password-field;
+}
+
+.heading{
+    float: $left;
+    margin-left: 45px;
+    font-family: 'Times New Roman', Times, serif;
+    font-variant: small-caps;
+}
+
+.registertitle{
+    @include main-title;
+    width: 100px;
+    height: 40px;
+    margin-left: 48px;
+}
+
+.login{
+    float: $left;
+    margin-top:15px;
+    margin-left: 45px;
+}
+
+.passwordText{
+    float: $left;
+    font-size: 15px;
+    margin-left: 48px;
+}
+
+.registerbutton
+{
+    float: $left;
+    margin-left: 310px;
+    margin-top:15px;
+}
+
+.first{
+    float: $left;
+    margin-left: 48px;
+}
+
+.last{
+    float: $left;
+    margin-left: 50px;
+}
+
+.confirm{
+    float: $left;
+    margin-left: 20px;
+}
+
+.passwordDiv{
+    float: $left;
+    margin-left: 48px;
+}
+
+.showPassword{
+    float: $left;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+.heading,.first,.passwordDiv,.passwordText,.login{
+    clear: both;
+}

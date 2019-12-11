@@ -1,0 +1,11 @@
+/Backend/node_modules
+/Backend/.env
+/Backend/test
+/Backend/.nyc_output
+/Backend/.scannerwork
+/Backend/coverage
+/reduxfront/node_modules
+/reduxfront/build
+/reduxfront/public/firebase-*.js
+/reduxfront/src/push
+/.vscode

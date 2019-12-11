@@ -1,0 +1,28 @@
+@import '../css/constants/mixin.scss';
+
+.resetCard{
+    @include card;
+    height: 400px;
+}
+
+.resetTitle{
+    @include main-title;
+}
+
+.resetHead{
+    font-size: 15px;
+    font: x-large;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.resetTextField{
+    width: 250px;
+    height: 50px;
+}
+
+.resetButton
+{
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}

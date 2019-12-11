@@ -1,0 +1,83 @@
+@import '../css/constants/mixin.scss';
+
+.options{
+    @include flex;
+    justify-content: space-between;
+}
+
+.trashIcons{
+    @include flex;
+    margin:20px 0 20px 20px;
+    width: 20%;
+    justify-content: space-between;
+}
+
+#more,#color,#archive,#remind,#unarchive,#restore,#deleteicon{
+    fill: #202124;
+}
+
+#more:hover,#color:hover,#archive:hover,#remind:hover,#unarchive:hover,#restore:hover,#deleteicon:hover{
+    opacity: .71;
+}
+
+.pop{
+    z-index: 1800;
+    background-color: rgb(250, 250, 250);
+    margin:10px;
+    padding: 10px;
+    width: 80px;
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.menuPop{
+    width: 150px;
+    border:1px solid lightgrey;
+    border-radius: 10px;
+    z-index: 10000;
+    background-color: rgb(255, 255, 255);
+}
+
+.labelPop{
+    @extend .menuPop;
+}
+
+.divide{
+    margin-top: 5px;
+}
+
+#label{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.listText{
+    border: 1px solid transparent;
+    letter-spacing: .01428571em;
+    font-size: .875rem;
+    font-family: Roboto,Arial,sans-serif;
+    font-weight: 500;
+    line-height: 1.25rem;
+    padding: 5px 10px 5px 17px;
+    cursor: pointer;
+}
+
+.remindTitle{
+    font-size: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.datePicker,.timePicker{
+   width: 250px;
+}
+
+.save{
+    float: right;
+    margin: 20px 10px 20px 0px;
+    cursor: pointer;
+}

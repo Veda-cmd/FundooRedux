@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Fundoo app",
+  "main": "server.js",
+  "scripts": {
+    "coverage": "nyc -r cobertura -r text-summary -r lcov npm test",
+    "test": "mocha test/*.js --timeout 20000",
+    "start": "nodemon server.js",
+    "debug": "nodemon --inspect server.js"
+  },
+  "author": "Vedant",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "aws-sdk": "^2.568.0",
+    "bcrypt": "^3.0.6",
+    "busboy": "^0.3.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "config": "^3.2.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^5.3.1",
+    "follow-redirects": "^1.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^6.2.2",
+    "mongoose": "^5.7.9",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.3.1",
+    "nyc": "^14.1.1",
+    "redis": "^2.8.0",
+    "shortid": "^2.2.15",
+    "sync": "^0.2.5",
+    "url": "^0.11.0",
+    "valid-url": "^1.0.9",
+    "winston": "^3.2.1"
+  }
+}
