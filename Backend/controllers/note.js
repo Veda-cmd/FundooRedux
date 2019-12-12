@@ -189,7 +189,7 @@ class NoteController {
             }
 
             if ('title' in req.body || 'description' in req.body || 'color' in req.body ||
-                'reminder' in req.body || 'isArchived' in req.body || 'isPinned' in req.body || 'isTrash' in req.body
+                'isArchived' in req.body || 'isPinned' in req.body || 'isTrash' in req.body
                 && 'email' in req.decoded) {
 
                     let note = {
@@ -199,7 +199,6 @@ class NoteController {
                         color: req.body.color || null,
                         isArchived: req.body.isArchived || false,
                         isPinned: req.body.isPinned || false,
-                        reminder: req.body.reminder,
                         isTrash: req.body.isTrash || false
                     }
                     
@@ -264,6 +263,49 @@ class NoteController {
                 else {
                     res.status(200).send(data);
                 }
+            })
+        } 
+        catch (error) {
+            res.status(422).send({message:"Operation failed."});
+        }
+    }
+
+    addReminder(req,res){
+        try {
+            req.checkBody('note_id', 'Note id cannot be empty').notEmpty();
+            req.checkBody('reminder','Reminder cannot be empty').notEmpty();
+            const errors = req.validationErrors();
+            if (errors) {
+                return res.status(422).json({ errors: errors });
+            }
+
+            noteService.addReminder(req.body)
+            .then(data=>{
+                res.status(200).send(data);
+            })
+            .catch(err=>{
+                res.status(422).send(err);
+            })
+        } 
+        catch (error) {
+            res.status(422).send({message:"Operation failed."});
+        }
+    }
+
+    deleteReminder(req,res){
+        try {
+            req.checkBody('note_id', 'Note id cannot be empty').notEmpty();
+            const errors = req.validationErrors();
+            if (errors) {
+                return res.status(422).json({ errors: errors });
+            }
+
+            noteService.deleteReminder(req.body)
+            .then(data=>{
+                res.status(200).send(data);
+            })
+            .catch(err=>{
+                res.status(422).send(err);
             })
         } 
         catch (error) {

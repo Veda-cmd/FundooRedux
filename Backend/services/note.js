@@ -329,8 +329,7 @@ class noteService {
                             "color": req.color ? req.color : data.color,
                             "isArchived": req.isArchived === true ? true : false,
                             "isPinned": req.isPinned === true ? true : false,
-                            "isTrash": req.isTrash === true ? true : false,
-                            "reminder": req.reminder===null ? req.reminder : req.reminder!==null?req.reminder:data.reminder
+                            "isTrash": req.isTrash === true ? true : false
                         }
     
                         // the new fields are updated according to given data in request.
@@ -380,13 +379,19 @@ class noteService {
     deleteNote(req, callback) {
         // isTrash property of the specified note is updated to true.
        
-        noteModel.updateOne({ _id: req.note_id }, { isTrash: true,reminder:null }, (err, data) => {
+        noteModel.updateOne({ _id: req.note_id }, { isTrash: true,isPinned:false,reminder:null }, (err, data) => {
             if (err) {
                 callback(err);
             }
             else {
                 callback(null, { message: 'Note moved to Trash' });
                 this.getAllNotes({email:data.user_id});
+                let archiveObject = { user_id: data.user_id, isArchived: true };
+                this.getListings(archiveObject);
+                let trashObject = { user_id: data.user_id, isTrash: true };
+                this.getListings(trashObject);
+                let pinnedObject = { user_id: data.user_id, isPinned: true };
+                this.getListings(pinnedObject);
             }
         });
     }
@@ -410,6 +415,34 @@ class noteService {
                 callback(null, { message: 'Note deleted' });
             }
         });
+    }
+
+    addReminder(req){
+        return new Promise((resolve,reject)=>{
+            noteModel.updateOne({ _id: req.note_id }, {reminder:req.reminder}, (err, data) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    this.getAllNotes({email:data.user_id});
+                    resolve(data);
+                }
+            });
+        })
+    }
+
+    deleteReminder(req){
+        return new Promise((resolve,reject)=>{
+            noteModel.updateOne({ _id: req.note_id }, {reminder:null}, (err, data) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    this.getAllNotes({email:data.user_id});
+                    resolve({ message: 'Reminder deleted' });
+                }
+            });
+        })
     }
 
     /**

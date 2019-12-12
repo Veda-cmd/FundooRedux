@@ -50,6 +50,7 @@ class MenuPopper extends Component{
                 <div>
                     <LabelPopper dialog={this.props.dialog} 
                     more={this.props.more}
+                    pinNotes={this.props.pinNotes}
                     getLabel={this.props.getLabel} 
                     note={this.props.note} 
                     open={this.state.open} 

@@ -27,6 +27,9 @@ class DialogBox extends Component {
             title: this.props.item.title,
             description: this.props.item.description,
             reminder:this.props.item.reminder,
+            isArchived:this.props.item.isArchived,
+            isPinned:this.props.item.isPinned,
+            isTrash:this.props.item.isTrash,
             remindFront:null,
             label:this.props.item
         }
@@ -60,10 +63,10 @@ class DialogBox extends Component {
     }
 
     getReminderData=(date,time)=>{
-
         this.setState({
             remind:true
         })
+
         let newTime= time.toString().slice(16,25),
         dateFront=date.toString().slice(3,10);
         var hours = time.getHours() ; // gives the value in 24 hours format
@@ -77,8 +80,21 @@ class DialogBox extends Component {
         let reminder=dateFront+','+date.toString().slice(11,15)+' '+newTime;
         
         this.setState({
-            reminder:reminder,
             remindFront:remindFront
+        })
+
+        let request={
+            note_id:this.props.item.id,
+            reminder:reminder
+        }
+
+        Service.addReminder(request)
+        .then(data=>{
+            this.props.getNotes();
+        })
+        .catch(err=>{
+            console.log(err);
+            
         })
         
     }

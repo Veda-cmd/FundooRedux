@@ -50,13 +50,12 @@ class DisplayNote extends Component {
             note_id:this.props.note.id,
             reminder:reminder
         }
-        Service.updateNote(request)
+        Service.addReminder(request)
         .then(response=>{
             this.props.getNotes();
         })
         .catch(err=>{
             console.log(err);
-        
         });
     }
 
@@ -136,8 +135,14 @@ class DisplayNote extends Component {
 
         Service.deleteNote(request)
         .then(response => {
+            if(this.props.note.isPinned===true){
+                this.props.pinNotes();
+                this.props.getNotes();
+            }
+            else{
+                this.props.getNotes();
+            }
             
-            this.props.getNotes();
         })
         .catch(err => {
             console.log(err);
@@ -153,10 +158,9 @@ class DisplayNote extends Component {
     handleReminderChip=(event)=>{
         let request={
             note_id: this.props.note.id,
-            reminder:null
         }
 
-        Service.updateNote(request)
+        Service.deleteReminder(request)
         .then(response=>{  
             this.setState({
                 snack:true,
@@ -177,7 +181,13 @@ class DisplayNote extends Component {
         
         Service.deleteLabelFromNote(request)
         .then(res=>{
-            this.props.getNotes();
+            if(this.props.note.isPinned===true){
+                this.props.pinNotes();
+                this.props.getNotes();
+            }
+            else{
+                this.props.getNotes();
+            }
         })
         .catch(err=>{
             console.log(err);
@@ -221,6 +231,38 @@ class DisplayNote extends Component {
         });
     }
 
+    setPinned=(event)=>{
+        let request = {
+            note_id: this.props.note.id,
+            isPinned:true
+        }
+        
+        Service.updateNote(request)
+        .then(response => {
+            this.props.pinNotes();
+            this.props.getNotes();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
+    setUnpinned=(event)=>{
+        let request = {
+            note_id: this.props.note.id,
+            isPinned:false
+        }
+        
+        Service.updateNote(request)
+        .then(response => {
+            this.props.pinNotes();
+            this.props.getNotes();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
     handleClickAway=()=>{
         this.handleDialogBox();
     }
@@ -228,20 +270,30 @@ class DisplayNote extends Component {
     render() {
         return (
             <div className={this.props.list ? 'double' : 'single'}>
-                <Card draggable  onDragStart={(e) => this.props.handleDragStart(e, this.props.note)}
+                <Card draggable onDragStart={(e) => this.props.handleDragStart(e, this.props.note)}
                     style={{ backgroundColor: this.state.color === '' ? this.props.note.color : this.state.color }}>
-                    <div className='title' onClick={this.handleDialogBox}>
-                        <div className='label1'>
+                    <div className='title'>
+                        <div className='label1' onClick={this.handleDialogBox} >
                             <label>{this.props.note.title}</label>
                         </div>
-                        <div className='pin'>
+                        {this.props.note.isPinned===true?
+                         <div className='pin' onClick={(event)=>{this.setUnpinned(event)}}>
+                            <Tooltip title='Unpin note'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" d="M0 0h24v24H0z"/>
+                                <path d="M17 4a2 2 0 0 0-2-2H9c-1.1 0-2 .9-2 2v7l-2 3v2h6v5l1 1 1-1v-5h6v-2l-2-3V4z"/>
+                                </svg>
+                            </Tooltip>
+                        </div>
+                        :
+                        <div className='pin' onClick={(event)=>{this.setPinned(event)}}>
                             <Tooltip title='Pin note'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="none" d="M0 0h24v24H0z" />
                                     <path d="M17 4v7l2 3v2h-6v5l-1 1-1-1v-5H5v-2l2-3V4c0-1.1.9-2 2-2h6c1.11 0 2 .89 2 2zM9 4v7.75L7.5 14h9L15 11.75V4H9z" />
                                 </svg>
                             </Tooltip>
-                        </div>
+                        </div>}
                     </div>
                     <div className='label2'>
                         <label>{this.props.note.description}</label>
@@ -265,6 +317,7 @@ class DisplayNote extends Component {
                                 setUnarchive={this.setUnarchive}
                                 setArchive={this.setArchive}
                                 getNotes={this.props.getNotes} 
+                                pinNotes={this.props.pinNotes}
                                 note={this.props.note} 
                                 getColor={this.setColor}
                                 delete={this.deleteNote} />
@@ -274,7 +327,6 @@ class DisplayNote extends Component {
                         delete={this.handleDeleteNote}
                         />
                     }
-                    
                 </Card>
                 <div>
                     <DialogBox

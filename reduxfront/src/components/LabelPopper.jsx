@@ -120,7 +120,7 @@ class LabelPoppper extends Component{
 
                 Service.addLabelToNote(request)
                 .then(response=>{
-                    // console.log(response);
+                    this.props.pinNotes();
                     this.props.getNotes();
                 })
                 .catch(err=>{

@@ -23,7 +23,7 @@ class DrawerMenu extends Component{
     }
 
     handleReminder=()=>{
-       this.props.props.history.push('/dashboard/reminders');
+       this.props.handleReminder();
     }
 
     handleLabel=(event,item)=>{
@@ -34,15 +34,15 @@ class DrawerMenu extends Component{
         this.setState({
             notes:true
         })
-        this.props.props.history.push('/dashboard');
+        this.props.handleNotes();
     }
 
     handleArchive=()=>{
-        this.props.props.history.push('/dashboard/archive');
+        this.props.handleArchive();
     }
 
     handleTrash=()=>{
-        this.props.props.history.push('/dashboard/trash');
+        this.props.handleTrash();
     }
 
     handleDialog=(event)=>{
@@ -133,8 +133,9 @@ class DrawerMenu extends Component{
 }
 
 const mapStateToProps = (state) => {
+     
     return {
-        open: state
+        open: state.drawer
     }
 }
 

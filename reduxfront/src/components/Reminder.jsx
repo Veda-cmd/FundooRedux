@@ -1,8 +1,7 @@
 import React,{Component} from 'react';
-import AppBar from './AppBar';
 import './Dashboard.scss';
 import NoteEditor from './CreateNote';
-import Drawer from './Drawer';
+import {connect} from 'react-redux';
 import Masonry from 'react-masonry-component';
 import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
@@ -67,13 +66,12 @@ class Reminder extends Component{
 
        super(props);
        this.state={
-           openDrawer:false,
-           openNoteEditor:false,
-           list:false,
            notes:[],
            labels:[],
            title:'Reminders'
        }
+        this.getNoteswithReminders();
+        this.getAllLabels();
     }
 
     handleDrawerOpen=(event)=>{
@@ -129,7 +127,7 @@ class Reminder extends Component{
                 let array = data.filter((item)=>{
                     return item.reminder!==null
                 })
-                
+
                 this.setState({
                     notes:array,
                 });
@@ -137,30 +135,12 @@ class Reminder extends Component{
         })
     }
 
-    UNSAFE_componentWillMount(){
-        this.getNoteswithReminders();
-        this.getAllLabels();
-    }
-
     render()
     {
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
-                    <div>
-                        <AppBar title={this.state.title} 
-                            handleDrawer={this.handleDrawerOpen}
-                            getNotes={this.getNoteswithReminders}
-                            list={this.handleList}
-                            tagChange={this.state.list}
-                            props={this.props} />
-                    </div>
-                    <div>
-                        <Drawer getValue={this.state.openDrawer} 
-                        labels={this.state.labels}
-                        props={this.props} />
-                    </div>
-                    <div className={this.state.openDrawer?'shift':'cardAnimate'}>
+                    <div className={this.props.openDrawer?'shift':'cardAnimate'}>
                         <NoteEditor labels={this.state.labelsNote} 
                             openNoteEditor={this.state.openNoteEditor}
                             noteEditor={this.handleNoteEditor} 
@@ -183,4 +163,10 @@ class Reminder extends Component{
     }
 }
 
-export default Reminder;
+const mapStateToProps = (state) => {
+    return {
+        openDrawer: state
+    }
+}
+
+export default connect(mapStateToProps)(Reminder);

@@ -1,7 +1,5 @@
 import React,{Component} from 'react';
-import AppBar from './AppBar';
 import './Dashboard.scss';
-import Drawer from './Drawer';
 import Masonry from 'react-masonry-component';
 import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
@@ -125,21 +123,7 @@ class Archive extends Component{
         return(
         <div>
             <MuiThemeProvider theme={theme}>
-                <div>
-                    <AppBar title={this.state.title} 
-                        handleDrawer={this.handleDrawerOpen}
-                        getNotes={this.getArchivedNotes}
-                        list={this.handleList}
-                        tagChange={this.state.list}
-                        props={this.props} 
-                    />
-                </div>
-                <div>
-                    <Drawer getValue={this.state.openDrawer} 
-                    labels={this.state.labels}
-                    props={this.props} />
-                </div>
-                <div className={this.state.openDrawer?'shift':'cardAnimate'}>
+                <div className={this.props.openDrawer?'shift':'cardAnimate'}>
                     <div>
                         <Masonry className='displayCards'>
                         {this.state.notes.map((item,index)=>

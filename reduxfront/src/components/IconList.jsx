@@ -109,6 +109,7 @@ class Icon extends Component {
                 
                 <MenuPopper dialog={this.props.dialog} 
                     getLabel={this.props.getLabel}  
+                    pinNotes={this.props.pinNotes}
                     getNotes={this.props.getNotes}
                     note={this.props.note} 
                     more={this.props.openNoteEditor}

@@ -9,10 +9,7 @@ import React,{Component} from 'react';
 import './Dashboard.scss';
 import {connect} from 'react-redux';
 import Appbar from './AppBar';
-import Masonry from 'react-masonry-component';
-import Note from './CreateNote';
 import Drawer from './Drawer';
-import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 const Service = require('../services/services');
 const theme = createMuiTheme({
@@ -97,65 +94,26 @@ class Dashboard extends Component{
 
         super(props);
         this.state={
-            openNoteEditor:false,
-            list:false,
-            notes:[],
             labels:[],
-            title:null,
-            toggle:false,
-            search:false,
             value:''
         }  
-        this.getAllNotes();
-        this.getAllLabels();      
-    }
- 
-    /**
-     * @description handleDrawerOpen is used to handle drawer navigation on dashboard.
-     * if true, the drawer is displayed else it is closed.
-    */
-
-    handleDrawerOpen=(event)=>{
-        this.setState({
-            openDrawer:!this.state.openDrawer,
-            openNoteEditor:false
-        });
+        this.getAllLabels();     
     }
 
-    /**
-     * @description handleNoteEditor is used for managing open/close state of note editor.
-    */
-
-    handleNoteEditor=()=>
-    {
-        this.setState({
-            openNoteEditor:!this.state.openNoteEditor
-        })
+    handleNotes=()=>{
+        this.props.history.push('/dashboard/notes');
     }
 
-    handleList=(event)=>
-    {
-        this.setState({
-            list:!this.state.list
-        })
+    handleArchive=()=>{
+        this.props.history.push('/dashboard/archive');
     }
 
-    getAllNotes=()=>
-    {
-        Service.getNotes((err,response)=>
-        {
-            if(err)
-            {
-                console.log('Error',err);
-            }
-            else
-            {
-                let data = response.data.reverse(); 
-                this.setState({
-                    notes:data,
-                });
-            }
-        })
+    handleTrash=()=>{
+        this.props.history.push('/dashboard/trash');
+    }
+
+    handleReminder=()=>{
+        this.props.history.push('/dashboard/reminders');
     }
 
     getAllLabels=()=>{
@@ -173,74 +131,8 @@ class Dashboard extends Component{
         })
     }
 
-    searchNotes=(event)=>{
-        
-        if(event.target.value.length>0){
-            this.setState({
-                search:true
-            })
-
-            let request={
-                search:event.target.value
-            }
-        
-            Service.search(request)
-            .then(res=>{
-                this.setState({
-                    notes:res.data.data
-                })
-                
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        }
-        else{
-            this.setState({
-                search:false
-            })
-        }
-    }
-
-    searchClose=(event)=>{
-        this.setState({
-            toggle:!this.state.toggle,
-            [event.target.value]:''
-        })
-        this.getAllNotes();
-    }
-
-    searchOpen=(event)=>{
-        this.setState({
-            toggle:!this.state.toggle,
-        })
-    }
-
-    handleDragStart=(e,note)=>{
-        e.dataTransfer.setData('text/plain', note.id);
-    }
-
-    onDrop=(e,index)=>{
-        let note = e.dataTransfer.getData('text');
-        let temp,noteArray=this.state.notes;
-
-        for(let i=0;i<noteArray.length;i++){  
-            if(noteArray[i].id === note){
-                temp=noteArray[index];
-                noteArray[index]=noteArray[i];
-                noteArray[i]=temp;
-                break;
-            }
-        }
-
-        this.setState({
-            notes:noteArray
-        })
-    }
-
     render()
     {
-        
         return(
             <div>
                 <MuiThemeProvider theme={theme}>
@@ -250,8 +142,6 @@ class Dashboard extends Component{
                         toggle={this.state.toggle}
                         close={this.searchClose} 
                         search={this.searchNotes} 
-                        title={this.state.title}
-                        handleDrawer={this.handleDrawerOpen}
                         getNotes={this.getAllNotes}
                         list={this.handleList}
                         tagChange={this.state.list}
@@ -259,57 +149,19 @@ class Dashboard extends Component{
                     </div>
                     <div>
                         <Drawer 
+                            handleReminder={this.handleReminder}
+                            handleNotes={this.handleNotes}
+                            handleArchive={this.handleArchive}
+                            handleTrash={this.handleTrash}
                             getValue={this.state.openDrawer}
-                            getNotes={this.getAllNotes}
                             getLabels={this.getAllLabels}
                             labels={this.state.labels}
-                            props={this.props}
                         ></Drawer>
                     </div>
-                    {this.state.toggle?
-                    <div>
-                        {this.state.search?
-                        <div className={this.props.open?'shift':'cardAnimate'}>
-                            <Masonry className='displayCards'>
-                            {this.state.notes.map((item,index)=>
-                                <div key={index} >
-                                <DisplayNote 
-                                note={item} getNotes={this.getAllNotes}
-                                list={this.state.list} />
-                                </div>
-                            )}
-                            </Masonry>
-                        </div>  
-                        :
-                        <div>
-                            <div className='searchDisplay'></div>
-                            <div className='searchText'>No search data</div>
-                        </div>}
-                    </div>:
-                    <div className={this.props.open?'shift':'cardAnimate'}>
-                        <Note labels={this.state.labelsNote} 
-                            openNoteEditor={this.state.openNoteEditor}
-                            noteEditor={this.handleNoteEditor} 
-                            getAllNotes={this.getAllNotes} />
-                        <div>
-                            <Masonry className='displayCards'>
-                            {this.state.notes.map((item,index)=>
-                                <div key={index}  onDragOver={(e) => e.preventDefault()}
-                                onDrop={(e)=>this.onDrop(e,index)}>
-                                <DisplayNote handleDragStart={this.handleDragStart}
-                                note={item} getNotes={this.getAllNotes}
-                                list={this.state.list} />
-                                </div>
-                            )}
-                            </Masonry>
-                        </div>
-                    </div>
-                    }
                 </MuiThemeProvider> 
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => {
@@ -319,7 +171,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Dashboard);
-
-    
-    
-

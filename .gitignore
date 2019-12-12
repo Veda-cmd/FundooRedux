@@ -3,6 +3,7 @@
 /Backend/test
 /Backend/.nyc_output
 /Backend/.scannerwork
+/Backend/logs
 /Backend/coverage
 /reduxfront/node_modules
 /reduxfront/build

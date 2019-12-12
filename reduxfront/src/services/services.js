@@ -108,6 +108,20 @@ export function updateNote(request)
     return response;
 }
 
+export function addReminder(request)
+{
+    let response = axios.post(baseUrl+'/note/addReminder',request,{headers:{token:sessionStorage.getItem('token')}})
+
+    return response;
+}
+
+export function deleteReminder(request)
+{
+    let response = axios.post(baseUrl+'/note/deleteReminder',request,{headers:{token:sessionStorage.getItem('token')}})
+
+    return response;
+}
+
 export function deleteNote(request)
 {
     let response = axios.post(baseUrl+'/note/deleteNote',request,{headers:{token:sessionStorage.getItem('token')}})

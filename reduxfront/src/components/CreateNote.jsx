@@ -6,7 +6,7 @@
 */ 
 
 import React,{Component} from 'react';
-import {Card,TextField, Tooltip, Avatar} from "@material-ui/core";
+import {Card,TextField, Tooltip, Avatar, ClickAwayListener} from "@material-ui/core";
 import Chip from '@material-ui/core/Chip';
 import './CreateNote.scss';
 import Button from '@material-ui/core/Button';
@@ -118,8 +118,7 @@ class Note extends Component{
                 isArchived:this.state.isArchived,
                 label:this.state.label
             }
-            console.log(request);
-            
+           
             Service.createNote(request,(error,response)=>
             {
                 if(error)
@@ -223,13 +222,17 @@ class Note extends Component{
         });
     }
 
+    handleClickAway=()=>{
+        this.props.noteEditor()
+    }
+
     render()
     {
-        // console.log(this.state.labels);
-        
+       
         return(
             <div>
                 {this.props.openNoteEditor ? 
+                <ClickAwayListener onClickAway={this.handleClickAway}>
                     <Card className='cardOpen' style={{backgroundColor:this.state.color}}>
                         <div className='createTitle'>
                             <div>
@@ -322,6 +325,7 @@ class Note extends Component{
                             ]}
                         />
                     </Card>
+                    </ClickAwayListener>
                     :<Card className='card' onClick={this.props.noteEditor}>
                         <div>
                             <TextField

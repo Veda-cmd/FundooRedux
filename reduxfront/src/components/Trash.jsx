@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
-import AppBar from './AppBar';
 import './Dashboard.scss';
-import Drawer from './Drawer';
+import {connect} from 'react-redux';
 import Masonry from 'react-masonry-component';
 import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
@@ -127,19 +126,6 @@ class Trash extends Component{
         return(
         <div>
             <MuiThemeProvider theme={theme}>
-                <div>
-                    <AppBar title={this.state.title} 
-                        handleDrawer={this.handleDrawerOpen}
-                        getNotes={this.getTrashNotes}
-                        list={this.handleList}
-                        tagChange={this.state.list}
-                        props={this.props} />
-                </div>
-                <div>
-                    <Drawer getValue={this.state.openDrawer} 
-                    labels={this.state.labels}
-                    props={this.props} />
-                </div>
                 <div className={this.state.openDrawer?'shift':'cardAnimate'}>
                     <div>
                         <Masonry className='displayCards'>
@@ -158,4 +144,10 @@ class Trash extends Component{
     }
 }
 
-export default Trash;
+const mapStateToProps = (state) => {
+    return {
+        open: state
+    }
+}
+
+export default connect(mapStateToProps)(Trash);

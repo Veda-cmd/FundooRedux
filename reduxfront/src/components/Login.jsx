@@ -76,7 +76,7 @@ class Login extends Component
                     sessionStorage.setItem('name',success.data.response.firstName);
                     sessionStorage.setItem('email',success.data.response.email);
                     sessionStorage.setItem('img',success.data.response.imageUrl);
-                    this.props.history.replace('/dashboard');
+                    this.props.history.replace('/dashboard/notes');
                 }
             });
         }

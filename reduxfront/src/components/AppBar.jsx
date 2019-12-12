@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputAdornment } from '@material-ui/core';
 import './Dashboard.scss';
-
+const Service = require('../services/services');
 const theme = createMuiTheme({
     overrides: {
         'MuiInputBase': {
@@ -106,6 +106,7 @@ export default connect() (withStyles(useStyles)(
             this.state={
                 anchorEl:null,
                 openDrawer:false,
+                search:false,
                 open:false,
                 refresh:false,
                 src:sessionStorage.getItem('img')
@@ -129,6 +130,60 @@ export default connect() (withStyles(useStyles)(
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('img');
             this.props.props.history.push('/');
+        }
+
+        searchOpen=(event)=>{
+            this.setState({
+                toggle:!this.state.toggle,
+            })
+
+            this.props.dispatch({
+                type:'SEARCH',
+                value:!this.state.toggle
+            })
+        }
+
+        search=(event)=>{
+            if(event.target.value.length>0){
+                this.setState({
+                    search:true
+                })
+    
+                let request={
+                    search:event.target.value
+                }
+            
+                Service.search(request)
+                .then(res=>{
+                    this.props.dispatch({
+                        type:'SEARCHDATA',
+                        value:res.data.data,
+                        search:this.state.search,
+                        show:this.state.toggle
+                    })
+                    
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            }
+            else
+            {
+                this.setState({
+                    search:false
+                })
+            }
+        }
+
+        searchClose=(event)=>{
+            this.setState({
+                toggle:!this.state.toggle
+            })
+
+            this.props.dispatch({
+                type:'SEARCH',
+                value:!this.state.toggle
+            })
         }
 
         /**
@@ -159,10 +214,10 @@ export default connect() (withStyles(useStyles)(
             this.setState({
                 openDrawer:!this.state.openDrawer
             })
-
+            
             this.props.dispatch({
-                type:'DRAWER',
-                value:!this.state.openDrawer});
+            type:'DRAWER',
+            value:!this.state.openDrawer});
         }
 
         render()
@@ -199,11 +254,11 @@ export default connect() (withStyles(useStyles)(
                                 </InputAdornment> 
                             )}
                             // value={this.props.value}
-                            onChange={(event)=>this.props.search(event)}
-                            onClick={(event)=>this.props.opensearch(event)}
+                            onChange={(event)=>this.search(event)}
+                            onClick={(event)=>this.searchOpen(event)}
                             placeholder='Search' 
                             inputProps={{'aria-label':'search'}}
-                            endAdornment={(this.props.toggle?<button onClick={(event)=>this.props.close(event)} id='searchButton' aria-label="Clear search" type="button">
+                            endAdornment={(this.state.toggle?<button onClick={(event)=>this.searchClose(event)} id='searchButton' aria-label="Clear search" type="button">
                                 <svg focusable="false" height="24px" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
                                     <path d="M0 0h24v24H0z" fill="none"></path>

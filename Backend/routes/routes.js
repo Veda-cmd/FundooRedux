@@ -32,6 +32,8 @@ router.post('/verify',auth.verificationToken,userControl.verifyMail);
 router.post('/note/addNote',auth.loginToken,noteController.addNote);
 router.get('/note/getAllNotes',auth.loginToken,cacheController.cacheNotes,noteController.getAllNotes);
 router.get('/note/getListings',auth.loginToken,cacheController.cacheListings,noteController.getListings);
+router.post('/note/addReminder',auth.loginToken,noteController.addReminder);
+router.post('/note/deleteReminder',auth.loginToken,noteController.deleteReminder);
 router.post('/note/addLabel',auth.loginToken,noteController.addLabelToNote);
 router.post('/note/deleteLabel',auth.loginToken,noteController.deleteLabelFromNote);
 router.post('/note/updateNote',auth.loginToken,noteController.updateNote);

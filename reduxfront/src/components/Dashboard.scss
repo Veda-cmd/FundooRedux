@@ -17,6 +17,11 @@
     margin-left: 120px;
 }
 
+.pinText{
+    @include text;
+    margin: -12px 0px 0px 10px;
+}
+
 .text{
     color: #202124;
     font-family:Helvetica,Arial,sans-serif;
