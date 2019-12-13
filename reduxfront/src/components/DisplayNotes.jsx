@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 import { Card, Tooltip,Avatar} from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import Icon from './IconList';
+import {connect} from 'react-redux';
 import TrashIcons from './TrashIcons';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -365,8 +366,13 @@ class DisplayNote extends Component {
                 />
             </div>
         )
-
     }
 }
 
-export default DisplayNote;
+const mapStateToProps = (state) => {     
+    return {
+        list: state.listReducer.list,
+    }
+}
+
+export default connect(mapStateToProps)(DisplayNote);

@@ -116,6 +116,10 @@ class Dashboard extends Component{
         this.props.history.push('/dashboard/reminders');
     }
 
+    handleLabel=(item)=>{
+        this.props.history.push(`/dashboard/label/${item.label_name}`);
+    }
+
     getAllLabels=()=>{
         Service.getAllLabels((err,response)=>{
             if(err)
@@ -152,6 +156,7 @@ class Dashboard extends Component{
                             handleReminder={this.handleReminder}
                             handleNotes={this.handleNotes}
                             handleArchive={this.handleArchive}
+                            handleLabel={this.handleLabel}
                             handleTrash={this.handleTrash}
                             getValue={this.state.openDrawer}
                             getLabels={this.getAllLabels}

@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
-import AppBar from './AppBar';
 import './Dashboard.scss';
+import {connect} from 'react-redux';
 import NoteEditor from './CreateNote';
-import Drawer from './Drawer';
-import Masonry from 'react-masonry-component';
 import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 const Service = require('../services/services');
@@ -76,6 +74,7 @@ class Label extends Component{
            name:null,
            title:this.props.match.params.name
        }
+       this.getAllLabels();
     }
 
     handleDrawerOpen=(event)=>{
@@ -155,38 +154,25 @@ class Label extends Component{
     
     componentDidUpdate(){
         if(this.props.match.params.name!==this.state.name){
+            this.props.dispatch({
+            type:'TITLE',
+            value:this.props.match.params.name
+            }) 
             this.getNoteswithLabels();
         }
     }
 
-    UNSAFE_componentWillMount(){
-        this.getAllLabels();
-    }
-
     render(){
+        
         return(
         <div>
             <MuiThemeProvider theme={theme}>
-                <div>
-                    <AppBar title={this.state.title} 
-                        handleDrawer={this.handleDrawerOpen}
-                        getNotes={this.getNoteswithLabels}
-                        list={this.handleList}
-                        tagChange={this.state.list}
-                        props={this.props} />
-                </div>
-                <div>
-                    <Drawer getValue={this.state.openDrawer} 
-                    labels={this.state.labels}
-                    props={this.props} />
-                </div>
                 <div className={this.state.openDrawer?'shift':'cardAnimate'}>
                     <NoteEditor labels={this.state.labelsNote} 
                         openNoteEditor={this.state.openNoteEditor}
                         noteEditor={this.handleNoteEditor} 
                         getAllNotes={this.getNoteswithLabels} />
-                    <div>
-                        <Masonry className='displayCards'>
+                    <div className='displayCards'>
                         {this.state.notes.map((item,index)=>
                             <div key={index} >
                             <DisplayNote 
@@ -194,7 +180,6 @@ class Label extends Component{
                             list={this.state.list} />
                             </div>
                         )}
-                        </Masonry>
                     </div>
                 </div>
             </MuiThemeProvider>
@@ -202,4 +187,4 @@ class Label extends Component{
     }
 }
 
-export default Label;
+export default connect()(Label);

@@ -71,6 +71,10 @@ class Trash extends Component{
            labels:[],
            title:'Trash'
        }
+       this.props.dispatch({
+        type:'TITLE',
+        value:'Trash'
+        }) 
     }
 
     handleDrawerOpen=(event)=>{

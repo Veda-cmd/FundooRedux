@@ -27,7 +27,7 @@ class DrawerMenu extends Component{
     }
 
     handleLabel=(event,item)=>{
-        this.props.props.history.push(`/dashboard/label/${item.label_name}`);
+        this.props.handleLabel(item);
     }
 
     handleNotes=()=>{
@@ -133,9 +133,9 @@ class DrawerMenu extends Component{
 }
 
 const mapStateToProps = (state) => {
-     
+    
     return {
-        open: state.drawer
+        open: state.postReducer.drawer,
     }
 }
 

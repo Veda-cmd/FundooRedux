@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import './Dashboard.scss';
+import {connect} from 'react-redux';
 import Masonry from 'react-masonry-component';
 import DisplayNote from './DisplayNotes';
 import { createMuiTheme, MuiThemeProvider} from "@material-ui/core";
@@ -70,6 +71,10 @@ class Archive extends Component{
            labels:[],
            title:'Archive'
        }
+       this.props.dispatch({
+        type:'TITLE',
+        value:'Archive'
+        }) 
     }
 
     handleDrawerOpen=(event)=>{
@@ -141,4 +146,4 @@ class Archive extends Component{
     }
 }
 
-export default Archive;
+export default connect()(Archive);

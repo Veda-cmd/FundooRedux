@@ -45,5 +45,4 @@ router.post('/label/add',auth.loginToken,labelController.addLabel);
 router.post('/label/update',auth.loginToken,labelController.updateLabel);
 router.post('/label/delete',auth.loginToken,labelController.deleteLabel);
 
-
 module.exports = router;

@@ -109,7 +109,7 @@ class Usermodel
     {   
         // logger.info(req,res);
           
-        User.updateOne(req,res)
+        User.findOneAndUpdate(req,res,{new:true})
         .then(data=>
         {
             // logger.info(data);

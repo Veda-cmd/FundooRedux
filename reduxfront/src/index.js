@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { initializeFirebase } from './push/push-notification';
-import { createStore } from 'redux';
+import { createStore,combineReducers } from 'redux';
 import postReducer from './reducers/Reducer';
+import {titleReducer,listReducer} from './reducers/TitleReducer';
 import { Provider } from 'react-redux';
 
-const store = createStore(postReducer);
+const rootReducer=combineReducers({
+    postReducer,
+    titleReducer,
+    listReducer
+})
+const store = createStore(rootReducer);
+// console.log(store.getState())
 
 ReactDOM.render(<Provider store={store}>
     <App /></Provider>, document.getElementById('root'));

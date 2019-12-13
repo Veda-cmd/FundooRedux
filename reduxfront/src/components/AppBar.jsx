@@ -20,6 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { InputAdornment } from '@material-ui/core';
 import './Dashboard.scss';
 const Service = require('../services/services');
+
 const theme = createMuiTheme({
     overrides: {
         'MuiInputBase': {
@@ -87,11 +88,17 @@ const useStyles = {
     },
 };
 
+const mapStateToProps = (state) => {
+    return {
+        title: state.titleReducer.title,
+    }
+}
+
 /** 
  *@description withStyles is the higher order component that you use to merge in the styles.
 */
 
-export default connect() (withStyles(useStyles)(
+export default connect(mapStateToProps) (withStyles(useStyles)(
     class AppToolBar extends Component{
 
         constructor(props)
@@ -105,12 +112,21 @@ export default connect() (withStyles(useStyles)(
             super(props);
             this.state={
                 anchorEl:null,
+                list:false,
+                file:null,
                 openDrawer:false,
                 search:false,
                 open:false,
+                profile:false,
                 refresh:false,
                 src:sessionStorage.getItem('img')
             }
+        }
+
+        input=(event)=>{
+            this.setState({
+                file:event.target.files[0]
+            })
         }
 
         handleReload=()=>
@@ -220,8 +236,47 @@ export default connect() (withStyles(useStyles)(
             value:!this.state.openDrawer});
         }
 
+        handleList=()=>{
+            this.setState({
+                list:!this.state.list
+            })
+            
+            this.props.dispatch({
+            type:'LIST',
+            value:!this.state.list});
+        }
+
+        setProfile=()=>{
+            this.setState({
+                profile:true
+            })
+        }
+
+        uploadFile=(event)=>{
+            console.log(this.state.file)
+            if(this.state.file!==null){
+                let file = this.state.file;
+                const form = new FormData();
+                form.append('image',file);
+                Service.upload(form)
+                .then(async(response)=>{
+                    await sessionStorage.setItem('img',response.data.imageUrl);
+                    this.setState({
+                        profile:false,
+                        src:sessionStorage.getItem('img')
+                    })
+                })
+                .catch(err=>{
+                    console.log(err);   
+                })
+            }
+            else{
+                return;
+            }
+        }
+
         render()
-        {
+        { 
             const {classes} = this.props;
             return(
             <div className={classes.grow}>
@@ -273,19 +328,19 @@ export default connect() (withStyles(useStyles)(
                             </svg>
                             </Tooltip>							
                         </div>
-                        <div className='settings' onClick={(event)=>this.props.list(event)}>
-                            {this.props.tagChange?
+                        <div className='settings' onClick={this.handleList}>
+                            {this.state.list?
                                 <Tooltip title='Grid View'>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24">
                                         <defs>
                                             <path d="M3,3 L10,3 C10.55,3 11,3.45 11,4 L11,10 C11,10.55 10.55,11 10,11 L3,11 C2.45,11 2,10.55 2,10 L2,4 C2,3.45 2.45,3 3,3 Z M3,13 L10,13 C10.55,13 11,13.45 11,14 L11,20 C11,20.55 10.55,21 10,21 L3,21 C2.45,21 2,20.55 2,20 L2,14 C2,13.45 2.45,13 3,13 Z M14,3 L21,3 C21.55,3 22,3.45 22,4 L22,10 C22,10.55 21.55,11 21,11 L14,11 C13.45,11 13,10.55 13,10 L13,4 C13,3.45 13.45,3 14,3 Z M14,13 L21,13 C21.55,13 22,13.45 22,14 L22,20 C22,20.55 21.55,21 21,21 L14,21 C13.45,21 13,20.55 13,20 L13,14 C13,13.45 13.45,13 14,13 Z M9,9 L9,5 L4,5 L4,9 L9,9 Z M9,19 L9,15 L4,15 L4,19 L9,19 Z M20,9 L20,5 L15,5 L15,9 L20,9 Z M20,19 L20,15 L15,15 L15,19 L20,19 Z" id="path-1"/>
                                         </defs>
-                                        <g id="grid_view_24px" stroke="none" stroke-width="1">
-                                            <polygon id="bounds" fill-opacity="0" points="0 0 24 0 24 24 0 24"/>
+                                        <g id="grid_view_24px" stroke="none" strokeWidth="1">
+                                            <polygon id="bounds" fillOpacity="0" points="0 0 24 0 24 24 0 24"/>
                                             <mask id="mask-2">
                                                 <use xlinkHref="#path-1"/>
                                             </mask>
-                                            <use id="icon" fill-rule="nonzero" xlinkHref="#path-1"/>
+                                            <use id="icon" fillRule="nonzero" xlinkHref="#path-1"/>
                                         </g>
                                     </svg>
                                 </Tooltip>
@@ -329,7 +384,8 @@ export default connect() (withStyles(useStyles)(
                                 <div>
                                     <div className='text'>{sessionStorage.getItem('name')}</div>
                                     <div className='text'>{sessionStorage.getItem('email')}</div>
-                                   <button className='changeButton'>Change Picture</button>
+                                   <button onClick={this.setProfile} 
+                                   className='changeButton'>Change Picture</button>
                                 </div>
                                 <div></div>
                                 <div>
@@ -342,7 +398,22 @@ export default connect() (withStyles(useStyles)(
                     </Toolbar>
                 </AppBar>
                 </ClickAwayListener>
+                {this.state.profile?
+                <div className='dialog'>
+                    <div className='backDrop'>
+                        <div className='container'>
+                            <Card className='setProfileDialog'>
+                                <div className='imageCard'>
+                                    <input className='choose' type='file' onChange={(event)=>this.input(event)}/>
+                                    <button className='upload' onClick={(event)=>this.uploadFile(event)}>Upload</button>
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
+                </div>:null
+                }
             </div>)
         }
     }
 ))
+

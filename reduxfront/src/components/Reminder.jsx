@@ -68,8 +68,11 @@ class Reminder extends Component{
        this.state={
            notes:[],
            labels:[],
-           title:'Reminders'
        }
+       this.props.dispatch({
+        type:'TITLE',
+        value:'Reminders'
+        }) 
         this.getNoteswithReminders();
         this.getAllLabels();
     }

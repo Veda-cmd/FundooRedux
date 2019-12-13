@@ -164,6 +164,13 @@ export function addLabel(request)
     return response;
 }
 
+export function upload(request){
+
+    let response = axios.post(baseUrl+'/upload',request,{headers:{token:sessionStorage.getItem('token')}})
+
+    return response;
+}
+
 export function deleteLabel(request)
 {
     console.log(request);

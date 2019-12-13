@@ -103,7 +103,12 @@ class AllNotes extends Component{
             title:null,
             search:false,
             value:''
-        }  
+        } 
+        this.props.dispatch({
+            type:'TITLE',
+            value:null
+        }) 
+
         this.getAllNotes();
         this.getAllLabels(); 
         this.getPinnedNotes();     
@@ -245,9 +250,8 @@ class AllNotes extends Component{
                             getAllNotes={this.getAllNotes} />
                         {this.state.pinned.length!==0?
                         <div>
-                            <div>
+                            <div className='displayCards'>
                                 <div className='pinText'>Pinned</div>
-                                <Masonry className='displayCards'>
                                 {this.state.pinned.map((item,index)=>
                                     <div key={index}  onDragOver={(e) => e.preventDefault()}
                                     onDrop={(e)=>this.onDrop(e,index)}>
@@ -256,11 +260,9 @@ class AllNotes extends Component{
                                     list={this.state.list} />
                                     </div>
                                 )}
-                                </Masonry>
                             </div>
-                            <div>
+                            <div className='displayCards'>
                                 <div className='pinText'>Others</div>
-                                <Masonry className='displayCards'>
                                 {this.state.notes.map((item,index)=>
                                     <div key={index}  onDragOver={(e) => e.preventDefault()}
                                     onDrop={(e)=>this.onDrop(e,index)}>
@@ -269,12 +271,10 @@ class AllNotes extends Component{
                                     list={this.state.list} />
                                     </div>
                                 )}
-                                </Masonry>
                             </div>
                         </div>
                         :
-                        <div>
-                            <Masonry className='displayCards'>
+                        <div className='displayCards'>
                             {this.state.notes.map((item,index)=>
                                 <div key={index}  onDragOver={(e) => e.preventDefault()}
                                 onDrop={(e)=>this.onDrop(e,index)}>
@@ -283,7 +283,6 @@ class AllNotes extends Component{
                                 list={this.state.list} />
                                 </div>
                             )}
-                            </Masonry>
                         </div>}
                     </div>
                     }
@@ -294,12 +293,11 @@ class AllNotes extends Component{
 }
 
 const mapStateToProps = (state) => {
-
     return {
-        open: state.drawer,
-        toggle:state.search,
-        data :state.searchData,
-        search:state.view
+        open: state.postReducer.drawer,
+        toggle:state.postReducer.search,
+        data :state.postReducer.searchData,
+        search:state.postReducer.view
     }
 }
 

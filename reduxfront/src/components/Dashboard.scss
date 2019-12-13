@@ -129,6 +129,59 @@ background-color: transparent;
     margin-left: 90px;
 }
 
+.dialog{
+    position: fixed;
+    z-index: 1300;
+    // right: 0px;
+    // bottom: 0px;
+    // top: 0px;
+    // left: 0px;
+}
+
+.container{
+    // height: 100%;
+    // outline: 0;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+}
+
+.backDrop{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    // z-index: -1;
+    position: fixed;
+    // align-items: center;
+    // touch-action: none;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.setProfileDialog{
+    border: 1px solid;
+    width:500px;
+    height: 100px;
+}
+
+.imageCard{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.choose{
+    margin-left: 140px;
+}
+
+.upload{
+    margin-left: 160px;
+    margin-top: 15px;
+    width:150px;
+}
+
 .refresh:hover,.settings:hover{
     fill:black
 }
@@ -198,9 +251,8 @@ transition: opacity 250ms ease-out;
 }
 
 .displayCards{
-    max-width: auto;
-    margin-top: 30px;
     display: flex;
+    margin-top: 30px;
     flex-direction: row;
     flex-wrap: wrap;
     
